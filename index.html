@@ -1,1 +1,1269 @@
-<h1>Hello</h1> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>little name studio</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Nunito:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --bg:           #fdfbf7;     /* milky off-white */
+    --surface:      #ffffff;     /* pure white card */
+    --surface-soft: #faf6ee;     /* hint of warmth */
+    --ink:          #4a4036;     /* soft cocoa */
+    --ink-light:    #8c8278;
+    --ink-faint:    #c4bcb1;
+
+    --pink:         #f6c9c1;     /* dusty pink */
+    --pink-deep:    #e89e95;
+    --peach:        #fbd9b4;     /* soft peach */
+    --butter:       #fdecb8;     /* pale butter */
+    --mint:         #cee6cc;     /* dusty mint */
+    --sky:          #c8dde6;     /* pale sky */
+    --lilac:        #d9cfe6;     /* soft lilac */
+
+    --accent:       #d8806e;     /* warm coral — primary action */
+    --accent-soft:  #f0b3a3;
+    --shadow-sm:    0 1px 2px rgba(74, 64, 54, 0.06);
+    --shadow-md:    0 4px 16px rgba(74, 64, 54, 0.06);
+    --shadow-lg:    0 8px 32px rgba(74, 64, 54, 0.08);
+    --r-sm:         12px;
+    --r-md:         18px;
+    --r-lg:         28px;
+    --r-pill:       999px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    min-height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Nunito', -apple-system, sans-serif;
+    overflow-x: hidden;
+    font-size: 15px;
+    line-height: 1.5;
+  }
+
+  body {
+    min-height: 100vh;
+    padding: 48px 20px 80px;
+    position: relative;
+    background:
+      radial-gradient(ellipse 70% 50% at 10% 0%, rgba(246, 201, 193, 0.18) 0%, transparent 60%),
+      radial-gradient(ellipse 60% 40% at 95% 100%, rgba(206, 230, 204, 0.2) 0%, transparent 60%),
+      var(--bg);
+  }
+
+  /* Floating decorative blobs */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(40px);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 0;
+    animation: float 18s ease-in-out infinite;
+  }
+  .blob-1 { width: 280px; height: 280px; background: var(--pink); top: 10%; left: -8%; }
+  .blob-2 { width: 220px; height: 220px; background: var(--butter); top: 65%; right: -5%; animation-delay: -6s; }
+  .blob-3 { width: 180px; height: 180px; background: var(--mint); top: 40%; left: 50%; animation-delay: -12s; opacity: 0.25; }
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    33% { transform: translate(30px, -20px); }
+    66% { transform: translate(-20px, 30px); }
+  }
+
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* ===== HEADER ===== */
+  .masthead {
+    text-align: center;
+    margin-bottom: 56px;
+  }
+
+  .pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: var(--surface);
+    border: 1px solid var(--ink-faint);
+    border-radius: var(--r-pill);
+    padding: 6px 14px;
+    font-size: 11px;
+    color: var(--ink-light);
+    letter-spacing: 0.04em;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow-sm);
+  }
+  .pill .dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--mint);
+  }
+
+  .masthead h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: clamp(44px, 8vw, 72px);
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+    margin-bottom: 14px;
+  }
+  .masthead h1 em {
+    font-style: italic;
+    font-weight: 400;
+    color: var(--accent);
+  }
+  .masthead h1 .heart {
+    display: inline-block;
+    font-size: 0.5em;
+    vertical-align: middle;
+    color: var(--pink-deep);
+    margin: 0 0.15em;
+    transform: translateY(-0.2em);
+  }
+
+  .tagline {
+    font-size: 16px;
+    color: var(--ink-light);
+    max-width: 420px;
+    margin: 0 auto;
+    line-height: 1.55;
+  }
+
+  /* ===== STEP CARDS ===== */
+  .step {
+    background: var(--surface);
+    border-radius: var(--r-lg);
+    padding: 28px 28px 32px;
+    margin-bottom: 16px;
+    box-shadow: var(--shadow-md);
+    transition: box-shadow 0.3s ease;
+  }
+  .step:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  .step-badge {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background: var(--surface-soft);
+    color: var(--ink-light);
+    font-family: 'Fraunces', serif;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .step-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .step-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  /* ===== UPLOAD ===== */
+  .dropzone {
+    border: 1.5px dashed var(--ink-faint);
+    background: var(--surface-soft);
+    border-radius: var(--r-md);
+    padding: 32px 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+  }
+  .dropzone:hover, .dropzone.dragging {
+    border-color: var(--accent);
+    background: #fff8f5;
+    transform: translateY(-1px);
+  }
+  .dropzone.has-image {
+    padding: 12px;
+    min-height: auto;
+  }
+
+  .dz-emoji {
+    font-size: 32px;
+    line-height: 1;
+    margin-bottom: 4px;
+  }
+  .dz-text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 19px;
+    color: var(--ink);
+  }
+  .dz-hint {
+    font-size: 13px;
+    color: var(--ink-light);
+  }
+
+  .preview {
+    position: relative;
+    width: 100%;
+    border-radius: var(--r-sm);
+    overflow: hidden;
+    background: var(--surface-soft);
+  }
+  .preview img {
+    width: 100%;
+    max-height: 320px;
+    object-fit: contain;
+    display: block;
+  }
+  .preview-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface);
+    border-top: 1px solid var(--surface-soft);
+    font-size: 12px;
+    color: var(--ink-light);
+  }
+  .preview-meta .filename {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 200px;
+  }
+
+  .remove-btn {
+    background: var(--surface-soft);
+    border: none;
+    color: var(--ink-light);
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .remove-btn:hover {
+    background: var(--pink);
+    color: var(--ink);
+  }
+
+  .load-error {
+    text-align: center;
+    padding: 28px 20px;
+  }
+  .load-error .emoji { font-size: 28px; margin-bottom: 8px; }
+  .load-error .head {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 17px;
+    color: var(--accent);
+    margin-bottom: 6px;
+  }
+  .load-error .detail {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+  }
+
+  /* ===== CATEGORY CHIPS ===== */
+  .themes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .theme {
+    background: var(--surface-soft);
+    border: 1.5px solid transparent;
+    color: var(--ink);
+    padding: 9px 16px;
+    border-radius: var(--r-pill);
+    cursor: pointer;
+    transition: all 0.18s ease;
+    font-family: 'Nunito', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .theme:hover {
+    background: var(--peach);
+    transform: translateY(-1px);
+  }
+  .theme.active {
+    background: var(--accent);
+    color: white;
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(216, 128, 110, 0.25);
+  }
+  .theme-emoji {
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  /* ===== CONJURE BUTTON ===== */
+  .generate-row {
+    text-align: center;
+    margin: 32px 0 36px;
+  }
+  .generate {
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    padding: 16px 38px;
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: var(--r-pill);
+    transition: all 0.2s ease;
+    box-shadow: var(--shadow-md);
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .generate:not(:disabled):hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
+    background: var(--accent);
+  }
+  .generate:not(:disabled):active {
+    transform: translateY(0);
+  }
+  .generate:disabled {
+    background: var(--surface-soft);
+    color: var(--ink-faint);
+    cursor: not-allowed;
+    box-shadow: var(--shadow-sm);
+  }
+  .generate .star {
+    font-size: 14px;
+  }
+
+  .status-hint {
+    margin-top: 14px;
+    font-size: 12px;
+    color: var(--ink-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+  }
+  .status-hint .live-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+  }
+  .status-hint.ready .live-dot {
+    background: var(--accent);
+    animation: pulse 1.4s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.4); }
+  }
+
+  /* ===== RESULTS ===== */
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-weight: 300;
+    font-size: 26px;
+    text-align: center;
+    margin: 40px 0 8px;
+    color: var(--ink);
+  }
+  .section-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+  .section-sub {
+    text-align: center;
+    font-size: 14px;
+    color: var(--ink-light);
+    margin-bottom: 22px;
+    font-style: italic;
+  }
+  .section-sub .quote { color: var(--accent); }
+
+  .results-toolbar {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 12px;
+  }
+  .clear-btn {
+    background: none;
+    border: none;
+    color: var(--ink-light);
+    font-family: 'Nunito', sans-serif;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: var(--r-pill);
+    transition: all 0.15s;
+  }
+  .clear-btn:hover {
+    background: var(--surface-soft);
+    color: var(--ink);
+  }
+
+  .name-list { display: grid; gap: 10px; }
+
+  .name-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 16px;
+    align-items: start;
+    padding: 18px 22px;
+    background: var(--surface);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm);
+    animation: nameAppear 0.5s cubic-bezier(.2,.7,.3,1.2) both;
+    transition: all 0.2s;
+  }
+  .name-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+  }
+  @keyframes nameAppear {
+    0% { opacity: 0; transform: translateY(8px); }
+    100% { opacity: 1; transform: translateY(0); }
+  }
+
+  .name-num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--accent);
+    line-height: 1;
+    padding-top: 6px;
+    min-width: 28px;
+  }
+  .name-card:nth-child(2n) .name-num { color: var(--pink-deep); }
+  .name-card:nth-child(3n) .name-num { color: #b3a160; }
+  .name-card:nth-child(4n) .name-num { color: #7ba588; }
+  .name-card:nth-child(5n) .name-num { color: #9b8bb0; }
+
+  .name-body { min-width: 0; }
+  .name-text {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.2;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .name-text .accent {
+    font-style: italic;
+    font-weight: 300;
+    color: var(--accent);
+  }
+  .name-reason {
+    font-size: 13px;
+    color: var(--ink-light);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .name-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    opacity: 0;
+    transition: opacity 0.18s;
+  }
+  .name-card:hover .name-actions { opacity: 1; }
+
+  .icon-btn {
+    background: var(--surface-soft);
+    border: none;
+    color: var(--ink-light);
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .icon-btn:hover {
+    background: var(--peach);
+    color: var(--ink);
+    transform: scale(1.05);
+  }
+  .icon-btn.fav-active {
+    background: var(--pink);
+    color: var(--pink-deep);
+  }
+  .icon-btn.fav-active:hover {
+    background: var(--pink-deep);
+    color: white;
+  }
+
+  /* Empty / Loading */
+  .empty-results {
+    text-align: center;
+    padding: 48px 20px;
+    color: var(--ink-light);
+  }
+  .empty-results .emoji {
+    font-size: 36px;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .empty-results .text {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 16px;
+  }
+
+  .loading-card {
+    padding: 18px 22px;
+    background: var(--surface);
+    border-radius: var(--r-md);
+    box-shadow: var(--shadow-sm);
+    overflow: hidden;
+  }
+  .loading-card .shimmer {
+    height: 22px;
+    width: 60%;
+    background: linear-gradient(90deg,
+      var(--surface-soft) 0%,
+      var(--peach) 50%,
+      var(--surface-soft) 100%);
+    background-size: 200% 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: var(--r-sm);
+  }
+  .loading-card .shimmer.short { width: 35%; height: 12px; margin-top: 10px; }
+  @keyframes shimmer {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+  .error-box {
+    margin-top: 16px;
+    padding: 16px 20px;
+    background: #fff5f3;
+    border-radius: var(--r-md);
+    color: var(--ink);
+    font-size: 14px;
+    text-align: center;
+    border: 1px solid var(--pink);
+  }
+  .error-box .head {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+
+  /* Saved */
+  .empty-saved {
+    text-align: center;
+    padding: 32px 20px;
+    background: var(--surface);
+    border-radius: var(--r-md);
+    color: var(--ink-light);
+    font-style: italic;
+    font-size: 14px;
+    box-shadow: var(--shadow-sm);
+  }
+  .empty-saved .heart { color: var(--pink-deep); }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 28px;
+    left: 50%;
+    transform: translateX(-50%) translateY(120px);
+    background: var(--ink);
+    color: var(--bg);
+    padding: 11px 22px;
+    font-family: 'Nunito', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: var(--r-pill);
+    box-shadow: var(--shadow-lg);
+    transition: transform 0.3s cubic-bezier(.2,.7,.3,1.2);
+    z-index: 100;
+    pointer-events: none;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* Footer flourish */
+  .footer-flourish {
+    text-align: center;
+    margin-top: 56px;
+    color: var(--ink-faint);
+    font-size: 13px;
+    font-style: italic;
+    font-family: 'Fraunces', serif;
+  }
+  .footer-flourish .stars { color: var(--accent-soft); margin: 0 4px; }
+
+  @media (max-width: 480px) {
+    body { padding: 32px 16px 60px; }
+    .step { padding: 22px 20px 24px; border-radius: var(--r-md); }
+    .name-text { font-size: 19px; }
+    .name-actions { opacity: 1; }
+    .masthead h1 { font-size: 40px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<div class="container">
+
+  <header class="masthead">
+    <div class="pill">
+      <span class="dot"></span>
+      <span>open daily · MMXXVI</span>
+    </div>
+    <h1>little name <em>studio</em><span class="heart">♡</span></h1>
+    <p class="tagline">Bring a picture, pick a flavour, and we'll dream up five names just for you.</p>
+  </header>
+
+  <!-- Step 1: Upload -->
+  <section class="step">
+    <div class="step-head">
+      <div class="step-badge">1</div>
+      <div class="step-title">Show us a <em>picture</em></div>
+    </div>
+
+    <div class="dropzone" id="dropzone">
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div id="dropzoneInner">
+        <div class="dz-emoji">📷</div>
+        <div class="dz-text">drop an image here</div>
+        <div class="dz-hint">or tap to choose · jpg, png, webp</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Step 2: Category -->
+  <section class="step">
+    <div class="step-head">
+      <div class="step-badge">2</div>
+      <div class="step-title">What kind of <em>name</em>?</div>
+    </div>
+    <div class="themes" id="themes"></div>
+  </section>
+
+  <!-- Conjure -->
+  <div class="generate-row">
+    <button class="generate" id="generateBtn" disabled>
+      <span class="star">✦</span>
+      <span id="btnLabel">conjure five names</span>
+      <span class="star">✦</span>
+    </button>
+    <div class="status-hint" id="statusHint">
+      <span class="live-dot"></span>
+      <span id="hintText">add an image and pick a category</span>
+    </div>
+  </div>
+
+  <!-- Results -->
+  <section class="results-section">
+    <div id="resultsBlock" style="display:none">
+      <h2 class="section-title">your <em>five</em> names</h2>
+      <div class="section-sub" id="imageSummary"></div>
+      <div class="results-toolbar">
+        <button class="clear-btn" id="clearResults">clear</button>
+      </div>
+    </div>
+    <div class="name-list" id="results">
+      <div class="empty-results" id="emptyResults">
+        <span class="emoji">🌸</span>
+        <div class="text">names will bloom here once you're ready</div>
+      </div>
+    </div>
+    <div id="errorBox"></div>
+  </section>
+
+  <!-- Saved -->
+  <section class="saved-section">
+    <h2 class="section-title">kept <em>favourites</em></h2>
+    <div class="name-list" id="saved">
+      <div class="empty-saved">
+        nothing kept yet — tap the <span class="heart">♡</span> next to any name to save it
+      </div>
+    </div>
+  </section>
+
+  <div class="footer-flourish">
+    <span class="stars">✦</span> made with care <span class="stars">✦</span>
+  </div>
+
+</div>
+
+<div class="toast" id="toast">copied</div>
+
+<script>
+  // ============ THEMES ============
+  const themes = {
+    tavern:        { name: "tavern",          emoji: "🍺", style: "Always 'The [Adjective] [Noun]' format. Evocative, slightly grimy, warm." },
+    band:          { name: "indie band",      emoji: "🎸", style: "Modern, slightly literary. May start with 'The', use ampersands, or be a single evocative phrase." },
+    startup:       { name: "startup",         emoji: "🚀", style: "Short, made-up words or smushed compounds. Tech-flavored. Sometimes ends in -ly, -ify, .io, or 'Labs'." },
+    sourdough:     { name: "sourdough",       emoji: "🍞", style: "Anthropomorphized — give it a human first name plus a grand epithet. Should sound like a beloved pet." },
+    spaceship:     { name: "spaceship",       emoji: "🚀", style: "Iain M. Banks style — full of dry wit and abstract emotion, or stately and naval. Long phrases allowed." },
+    cocktail:      { name: "cocktail",        emoji: "🍹", style: "Mood-driven, often noun phrases or 'The [Adjective] [Noun]'. Bittersweet or wry." },
+    villain:       { name: "villain",         emoji: "🦹", style: "Lord/Lady/Doctor/Madam + name + ominous epithet. Or just a single forbidding name with a place." },
+    racehorse:     { name: "racehorse",       emoji: "🐴", style: "Strange, aspirational phrases. Often with 'Lady', 'Mister', or abstract nouns paired oddly." },
+    perfume:       { name: "perfume",         emoji: "🌹", style: "Olfactory ingredients & paired contrasts. 'No. [Number]' allowed. Place names, years, sensory pairs." },
+    coffeeshop:    { name: "coffee shop",     emoji: "☕", style: "Warm, neighborhood-feeling. First names + Co., or 'The [Adjective] [Noun]'." },
+    novel:         { name: "novel",           emoji: "📖", style: "Literary fiction titles. 'The X of Y' or 'A [Adjective] [Noun]'. Quietly evocative." },
+    secretsociety: { name: "secret society",  emoji: "🔮", style: "'The [Order/Society/Brotherhood] of the [Adjective] [Noun]'. Esoteric, conspiratorial." },
+  };
+
+  // ============ STATE ============
+  let activeTheme = null;
+  let imageData = null;
+  let imageMime = null;
+  let imageDataUrl = null;
+  let currentFile = null;
+  const saved = [];
+  let isGenerating = false;
+
+  // ============ THEME RENDER ============
+  const themesEl = document.getElementById('themes');
+  Object.entries(themes).forEach(([key, t]) => {
+    const btn = document.createElement('button');
+    btn.className = 'theme';
+    btn.dataset.key = key;
+    btn.innerHTML = `<span class="theme-emoji">${t.emoji}</span><span>${t.name}</span>`;
+    btn.addEventListener('click', () => selectTheme(key));
+    themesEl.appendChild(btn);
+  });
+
+  function selectTheme(key) {
+    activeTheme = key;
+    document.querySelectorAll('.theme').forEach(el => {
+      el.classList.toggle('active', el.dataset.key === key);
+    });
+    updateGenerateButton();
+  }
+
+  // ============ IMAGE UPLOAD ============
+  const dropzone = document.getElementById('dropzone');
+  const fileInput = document.getElementById('fileInput');
+
+  dropzone.addEventListener('click', (e) => {
+    // Don't trigger when clicking the remove button or other inner controls
+    if (e.target.closest('.remove-btn')) return;
+    fileInput.click();
+  });
+  fileInput.addEventListener('change', e => {
+    if (e.target.files[0]) loadImage(e.target.files[0]);
+  });
+
+  ['dragenter','dragover'].forEach(ev =>
+    dropzone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      dropzone.classList.add('dragging');
+    })
+  );
+  ['dragleave','drop'].forEach(ev =>
+    dropzone.addEventListener(ev, e => {
+      e.preventDefault(); e.stopPropagation();
+      dropzone.classList.remove('dragging');
+    })
+  );
+  dropzone.addEventListener('drop', e => {
+    if (e.dataTransfer.files[0]) loadImage(e.dataTransfer.files[0]);
+  });
+
+  function setDropzoneEmpty() {
+    dropzone.classList.remove('has-image');
+    dropzone.innerHTML = `
+      <input type="file" id="fileInput" accept="image/*" style="display:none" />
+      <div id="dropzoneInner">
+        <div class="dz-emoji">📷</div>
+        <div class="dz-text">drop an image here</div>
+        <div class="dz-hint">or tap to choose · jpg, png, webp</div>
+      </div>
+    `;
+    // Re-bind file input listener
+    document.getElementById('fileInput').addEventListener('change', e => {
+      if (e.target.files[0]) loadImage(e.target.files[0]);
+    });
+  }
+
+  function setDropzoneLoading(file) {
+    dropzone.classList.add('has-image');
+    dropzone.innerHTML = `
+      <div class="empty-results" style="padding:24px">
+        <span class="emoji">🖼</span>
+        <div class="text">loading…</div>
+        <div style="font-size:11px; margin-top:6px; color:var(--ink-light)">${escapeHtml(file.name)} · ${formatBytes(file.size)}</div>
+      </div>
+    `;
+  }
+
+  function setDropzonePreview(url, file) {
+    dropzone.classList.add('has-image');
+    dropzone.innerHTML = `
+      <div class="preview">
+        <img src="${url}" alt="preview" />
+        <div class="preview-meta">
+          <span class="filename">${escapeHtml(file.name)}</span>
+          <button class="remove-btn" id="removeBtn" title="remove">×</button>
+        </div>
+      </div>
+    `;
+    document.getElementById('removeBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      clearImage();
+    });
+  }
+
+  function setDropzoneError(headline, detail) {
+    dropzone.classList.add('has-image');
+    dropzone.innerHTML = `
+      <div class="load-error">
+        <div class="emoji">🌧️</div>
+        <div class="head">${escapeHtml(headline)}</div>
+        <div class="detail">${escapeHtml(detail || 'try a different image')}</div>
+        <button class="clear-btn" id="tryAgainBtn" style="margin-top:14px">try another</button>
+      </div>
+    `;
+    document.getElementById('tryAgainBtn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      setDropzoneEmpty();
+    });
+  }
+
+  function clearImage() {
+    imageData = null; imageMime = null; imageDataUrl = null; currentFile = null;
+    setDropzoneEmpty();
+    updateGenerateButton();
+  }
+
+  async function loadImage(file) {
+    imageData = null; imageMime = null; imageDataUrl = null;
+    currentFile = file;
+    updateGenerateButton();
+
+    setDropzoneLoading(file);
+
+    if (!file) {
+      setDropzoneError('no file received', '');
+      return;
+    }
+
+    const lower = (file.name || '').toLowerCase();
+    const isHeic = file.type === 'image/heic' || file.type === 'image/heif'
+      || lower.endsWith('.heic') || lower.endsWith('.heif');
+
+    if (isHeic) {
+      setDropzoneError('HEIC not supported here',
+        'iPhones save photos as HEIC by default — try a screenshot instead, or change Settings → Camera → Formats → "Most Compatible"');
+      return;
+    }
+
+    if (file.size > 20 * 1024 * 1024) {
+      setDropzoneError(`file too large (${formatBytes(file.size)})`,
+        'please use an image under 20 MB');
+      return;
+    }
+
+    // PRIMARY: read directly. Reliable across formats.
+    let raw;
+    try {
+      raw = await readAsDataUrl(file);
+    } catch (err) {
+      setDropzoneError('couldn\'t read this file', err.message || 'try a different image');
+      return;
+    }
+
+    const rawBase64 = (raw || '').split(',')[1];
+    if (!rawBase64) {
+      setDropzoneError('the file appears empty', '');
+      return;
+    }
+
+    // Show preview right away
+    let finalMime = file.type || 'image/jpeg';
+    let finalBase64 = rawBase64;
+    let finalDataUrl = raw;
+
+    setDropzonePreview(finalDataUrl, file);
+
+    // OPTIONAL: try background compression to keep API payload small
+    if (file.size > 500 * 1024) {
+      try {
+        const compressed = await Promise.race([
+          compressImage(file),
+          new Promise((_, rej) => setTimeout(() => rej(new Error('compress timeout')), 4000))
+        ]);
+        if (compressed && compressed.base64 && compressed.base64.length < rawBase64.length) {
+          finalMime = compressed.mime;
+          finalBase64 = compressed.base64;
+          finalDataUrl = `data:${compressed.mime};base64,${compressed.base64}`;
+        }
+      } catch (err) {
+        console.info('compression skipped:', err.message);
+      }
+    }
+
+    const approxBytes = finalBase64.length * 0.75;
+    if (approxBytes > 5 * 1024 * 1024) {
+      setDropzoneError('image too big to send',
+        `~${formatBytes(approxBytes)} after processing — please try a smaller image`);
+      return;
+    }
+
+    imageMime = finalMime;
+    imageData = finalBase64;
+    imageDataUrl = finalDataUrl;
+    updateGenerateButton();
+  }
+
+  function formatBytes(n) {
+    if (n < 1024) return `${n} B`;
+    if (n < 1024 * 1024) return `${(n / 1024).toFixed(0)} KB`;
+    return `${(n / 1024 / 1024).toFixed(1)} MB`;
+  }
+
+  function readAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error || new Error('FileReader failed'));
+      reader.readAsDataURL(file);
+    });
+  }
+
+  async function compressImage(file, maxDim = 1024, quality = 0.85) {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      const objectUrl = URL.createObjectURL(file);
+      const cleanup = () => URL.revokeObjectURL(objectUrl);
+
+      img.onload = () => {
+        try {
+          let { width, height } = img;
+          if (!width || !height) throw new Error('no dimensions');
+          if (width > maxDim || height > maxDim) {
+            if (width > height) {
+              height = Math.round(height * maxDim / width);
+              width = maxDim;
+            } else {
+              width = Math.round(width * maxDim / height);
+              height = maxDim;
+            }
+          }
+          const canvas = document.createElement('canvas');
+          canvas.width = width;
+          canvas.height = height;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, width, height);
+          const dataUrl = canvas.toDataURL('image/jpeg', quality);
+          const base64 = dataUrl.split(',')[1];
+          if (!base64) throw new Error('canvas export empty');
+          cleanup();
+          resolve({ mime: 'image/jpeg', base64 });
+        } catch (err) { cleanup(); reject(err); }
+      };
+      img.onerror = () => { cleanup(); reject(new Error('decode failed')); };
+      img.src = objectUrl;
+    });
+  }
+
+  // ============ STATUS / BUTTON ============
+  function updateGenerateButton() {
+    const btn = document.getElementById('generateBtn');
+    const hint = document.getElementById('statusHint');
+    const hintText = document.getElementById('hintText');
+    const btnLabel = document.getElementById('btnLabel');
+    const ready = imageData && activeTheme && !isGenerating;
+    btn.disabled = !ready;
+    hint.classList.toggle('ready', ready);
+
+    if (isGenerating) {
+      btnLabel.textContent = 'thinking…';
+      hintText.textContent = 'reading the image and finding names';
+    } else if (!imageData && !activeTheme) {
+      btnLabel.textContent = 'conjure five names';
+      hintText.textContent = 'add an image and pick a category';
+    } else if (!imageData) {
+      btnLabel.textContent = 'conjure five names';
+      hintText.textContent = 'we still need an image';
+    } else if (!activeTheme) {
+      btnLabel.textContent = 'conjure five names';
+      hintText.textContent = 'pick a category';
+    } else {
+      btnLabel.textContent = `conjure five ${themes[activeTheme].name} names`;
+      hintText.textContent = 'all set — give it a tap';
+    }
+  }
+
+  // ============ GENERATE ============
+  document.getElementById('generateBtn').addEventListener('click', generate);
+
+  async function generate() {
+    if (!imageData || !activeTheme || isGenerating) return;
+    isGenerating = true;
+    updateGenerateButton();
+
+    document.getElementById('errorBox').innerHTML = '';
+    document.getElementById('emptyResults')?.remove();
+    document.getElementById('resultsBlock').style.display = 'block';
+    document.getElementById('imageSummary').innerHTML = '';
+
+    const list = document.getElementById('results');
+    list.innerHTML = '';
+    for (let i = 0; i < 5; i++) {
+      const ld = document.createElement('div');
+      ld.className = 'loading-card';
+      ld.innerHTML = '<div class="shimmer"></div><div class="shimmer short"></div>';
+      list.appendChild(ld);
+    }
+
+    const theme = themes[activeTheme];
+    const prompt = `You are a creative naming studio. The user has submitted an image and chosen the category: "${theme.name}".
+
+Style guidance for this category: ${theme.style}
+
+Your task:
+1. Look carefully at the image. Notice colors, mood, objects, atmosphere, era, textures — anything distinctive.
+2. Generate exactly 5 names in the style of "${theme.name}".
+3. Each name should be subtly inspired by something specific in the image (a color, a shape, the mood, an object, a feeling).
+4. After each name, give a very short reason — 6 to 12 words — explaining what in the image inspired it. Be specific.
+
+Respond ONLY with a JSON object in this exact format, no markdown fences, no extra text:
+{
+  "image_summary": "a 4-8 word evocative description of the image",
+  "names": [
+    {"name": "the actual name", "reason": "what in the image inspired it"},
+    {"name": "...", "reason": "..."},
+    {"name": "...", "reason": "..."},
+    {"name": "...", "reason": "..."},
+    {"name": "...", "reason": "..."}
+  ]
+}`;
+
+    try {
+      const response = await fetch("https://api.anthropic.com/v1/messages", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: "claude-sonnet-4-20250514",
+          max_tokens: 1000,
+          messages: [{
+            role: "user",
+            content: [
+              { type: "image", source: { type: "base64", media_type: imageMime, data: imageData } },
+              { type: "text", text: prompt }
+            ]
+          }]
+        })
+      });
+
+      if (!response.ok) throw new Error(`request failed (${response.status})`);
+
+      const data = await response.json();
+      const text = (data.content || [])
+        .map(b => b.type === 'text' ? b.text : '')
+        .filter(Boolean)
+        .join('\n');
+
+      const cleaned = text.replace(/```json\s*/g, '').replace(/```/g, '').trim();
+      const parsed = JSON.parse(cleaned);
+
+      if (!parsed.names || !Array.isArray(parsed.names)) throw new Error('unexpected response');
+
+      list.innerHTML = '';
+      parsed.names.forEach((entry, i) => {
+        list.appendChild(makeCard(entry.name, entry.reason, activeTheme, i));
+      });
+
+      if (parsed.image_summary) {
+        document.getElementById('imageSummary').innerHTML =
+          `<span class="quote">"</span>${escapeHtml(parsed.image_summary)}<span class="quote">"</span> · ${escapeHtml(themes[activeTheme].name)}`;
+      }
+    } catch (err) {
+      list.innerHTML = '';
+      const e = document.createElement('div');
+      e.className = 'empty-results';
+      e.id = 'emptyResults';
+      e.innerHTML = '<span class="emoji">🌸</span><div class="text">names will bloom here once you\'re ready</div>';
+      list.appendChild(e);
+      document.getElementById('errorBox').innerHTML = `
+        <div class="error-box">
+          <div class="head">something went wrong</div>
+          <div>${escapeHtml(err.message || 'please try again')}</div>
+        </div>
+      `;
+      document.getElementById('resultsBlock').style.display = 'none';
+    } finally {
+      isGenerating = false;
+      updateGenerateButton();
+    }
+  }
+
+  // ============ CARDS ============
+  function makeCard(name, reason, themeKey, index) {
+    const card = document.createElement('div');
+    card.className = 'name-card';
+    card.style.animationDelay = `${(index || 0) * 80}ms`;
+
+    const isFav = saved.some(s => s.name === name && s.theme === themeKey);
+
+    card.innerHTML = `
+      <div class="name-num">${String((index ?? 0) + 1).padStart(2, '0')}</div>
+      <div class="name-body">
+        <div class="name-text">${highlight(name)}</div>
+        ${reason ? `<div class="name-reason">${escapeHtml(reason)}</div>` : ''}
+      </div>
+      <div class="name-actions">
+        <button class="icon-btn copy-btn" title="copy">⎘</button>
+        <button class="icon-btn fav-btn ${isFav ? 'fav-active' : ''}" title="save">${isFav ? '♥' : '♡'}</button>
+      </div>
+    `;
+
+    card.querySelector('.copy-btn').addEventListener('click', e => {
+      e.stopPropagation(); copyName(name);
+    });
+    card.querySelector('.fav-btn').addEventListener('click', e => {
+      e.stopPropagation(); toggleSave(name, reason, themeKey, e.currentTarget);
+    });
+    return card;
+  }
+
+  function highlight(name) {
+    return escapeHtml(name).replace(/\b(the|of|von|de|&|and)\b/gi, '<span class="accent">$1</span>');
+  }
+
+  // ============ COPY / SAVE ============
+  function copyName(name) {
+    navigator.clipboard?.writeText(name).then(() => showToast(`copied "${name}"`));
+  }
+
+  function toggleSave(name, reason, themeKey, btn) {
+    const idx = saved.findIndex(s => s.name === name && s.theme === themeKey);
+    if (idx >= 0) {
+      saved.splice(idx, 1);
+      btn.textContent = '♡';
+      btn.classList.remove('fav-active');
+      showToast('removed');
+    } else {
+      saved.unshift({ name, reason, theme: themeKey });
+      btn.textContent = '♥';
+      btn.classList.add('fav-active');
+      showToast('kept ♡');
+    }
+    renderSaved();
+  }
+
+  function renderSaved() {
+    const el = document.getElementById('saved');
+    if (!saved.length) {
+      el.innerHTML = '<div class="empty-saved">nothing kept yet — tap the <span class="heart">♡</span> next to any name to save it</div>';
+      return;
+    }
+    el.innerHTML = '';
+    saved.forEach(s => {
+      const card = document.createElement('div');
+      card.className = 'name-card';
+      card.style.animationDelay = '0ms';
+      card.innerHTML = `
+        <div class="name-num">${themes[s.theme].emoji}</div>
+        <div class="name-body">
+          <div class="name-text">${highlight(s.name)}</div>
+          ${s.reason ? `<div class="name-reason">${escapeHtml(s.reason)} · ${escapeHtml(themes[s.theme].name)}</div>` : ''}
+        </div>
+        <div class="name-actions">
+          <button class="icon-btn copy-btn" title="copy">⎘</button>
+          <button class="icon-btn fav-btn fav-active" title="remove">♥</button>
+        </div>
+      `;
+      card.querySelector('.copy-btn').addEventListener('click', e => {
+        e.stopPropagation(); copyName(s.name);
+      });
+      card.querySelector('.fav-btn').addEventListener('click', e => {
+        e.stopPropagation();
+        const idx = saved.findIndex(x => x.name === s.name && x.theme === s.theme);
+        if (idx >= 0) saved.splice(idx, 1);
+        renderSaved();
+        showToast('removed');
+      });
+      el.appendChild(card);
+    });
+  }
+
+  // ============ TOAST ============
+  let toastTimer = null;
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => t.classList.remove('show'), 1600);
+  }
+
+  // ============ CLEAR ============
+  document.getElementById('clearResults').addEventListener('click', () => {
+    document.getElementById('results').innerHTML = `
+      <div class="empty-results" id="emptyResults">
+        <span class="emoji">🌸</span>
+        <div class="text">names will bloom here once you're ready</div>
+      </div>
+    `;
+    document.getElementById('resultsBlock').style.display = 'none';
+    document.getElementById('errorBox').innerHTML = '';
+  });
+
+  // ============ UTIL ============
+  function escapeHtml(s) {
+    if (s == null) return '';
+    return String(s)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+</script>
+
+</body>
+</html>
