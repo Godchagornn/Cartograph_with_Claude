@@ -14,9 +14,11 @@ if (!API_KEY) {
 const server = http.createServer((req, res) => {
   // Proxy endpoint
   if (req.method === 'POST' && req.url === '/api/messages') {
-    let body = '';
-    req.on('data', chunk => { body += chunk; });
+    const chunks = [];
+    req.on('data', chunk => chunks.push(chunk));
     req.on('end', () => {
+      const body = Buffer.concat(chunks);
+
       const options = {
         hostname: 'api.anthropic.com',
         path: '/v1/messages',
@@ -25,16 +27,18 @@ const server = http.createServer((req, res) => {
           'Content-Type': 'application/json',
           'x-api-key': API_KEY,
           'anthropic-version': '2023-06-01',
-          'Content-Length': Buffer.byteLength(body),
+          'Content-Length': body.length,
         },
       };
 
       const proxy = https.request(options, (apiRes) => {
+        console.log(`Anthropic → ${apiRes.statusCode}`);
         res.writeHead(apiRes.statusCode, { 'Content-Type': 'application/json' });
         apiRes.pipe(res);
       });
 
       proxy.on('error', (err) => {
+        console.error('Proxy error:', err.message);
         res.writeHead(502, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({ error: err.message }));
       });

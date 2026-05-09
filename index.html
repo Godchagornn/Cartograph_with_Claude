@@ -1087,7 +1087,7 @@ Respond ONLY with a JSON object in this exact format, no markdown fences, no ext
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
+          model: "claude-sonnet-4-5",
           max_tokens: 1000,
           messages: [{
             role: "user",
@@ -1099,7 +1099,14 @@ Respond ONLY with a JSON object in this exact format, no markdown fences, no ext
         })
       });
 
-      if (!response.ok) throw new Error(`request failed (${response.status})`);
+      if (!response.ok) {
+        let msg = `request failed (${response.status})`;
+        try {
+          const errData = await response.json();
+          if (errData?.error?.message) msg += ': ' + errData.error.message;
+        } catch {}
+        throw new Error(msg);
+      }
 
       const data = await response.json();
       const text = (data.content || [])
