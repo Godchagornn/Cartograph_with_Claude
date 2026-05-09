@@ -147,25 +147,6 @@
   .step-title { font-family: 'Fraunces', serif; font-weight: 400; font-size: 22px; color: var(--ink); line-height: 1.2; }
   .step-title em { font-style: italic; color: var(--accent); }
 
-  /* ===== API KEY ===== */
-  .key-input {
-    width: 100%;
-    border: 1.5px solid var(--ink-faint);
-    background: var(--surface-soft);
-    border-radius: var(--r-sm);
-    padding: 10px 14px;
-    font-family: 'Nunito', sans-serif;
-    font-size: 14px;
-    color: var(--ink);
-    outline: none;
-    transition: border-color 0.2s;
-  }
-  .key-input:focus { border-color: var(--accent); }
-  .key-input.set    { border-color: var(--mint); }
-  .key-hint { margin-top: 8px; font-size: 12px; color: var(--ink-light); }
-  .key-hint a { color: var(--accent); text-decoration: none; }
-  .key-hint a:hover { text-decoration: underline; }
-
   /* ===== UPLOAD ===== */
   .dropzone {
     border: 1.5px dashed var(--ink-faint);
@@ -364,20 +345,6 @@
     <p class="tagline">Bring a picture, pick a flavour, and we'll dream up five names just for you.</p>
   </header>
 
-  <!-- API Key -->
-  <section class="step">
-    <div class="step-head">
-      <div class="step-badge">🔑</div>
-      <div class="step-title">Your <em>Anthropic key</em></div>
-    </div>
-    <input type="password" id="apiKeyInput" class="key-input"
-      placeholder="sk-ant-api03-…" autocomplete="off" spellcheck="false" />
-    <p class="key-hint">
-      Saved in your browser only · get one at
-      <a href="https://console.anthropic.com/settings/keys" target="_blank" rel="noopener">console.anthropic.com</a>
-    </p>
-  </section>
-
   <!-- Step 1: Upload -->
   <section class="step">
     <div class="step-head">
@@ -466,18 +433,7 @@
   };
 
   // ============ API KEY ============
-  let apiKey = localStorage.getItem('lns_api_key') || '';
-
-  const apiKeyInput = document.getElementById('apiKeyInput');
-  apiKeyInput.value = apiKey;
-  if (apiKey) apiKeyInput.classList.add('set');
-
-  apiKeyInput.addEventListener('input', () => {
-    apiKey = apiKeyInput.value.trim();
-    localStorage.setItem('lns_api_key', apiKey);
-    apiKeyInput.classList.toggle('set', apiKey.length > 0);
-    updateGenerateButton();
-  });
+  const API_KEY = 'YOUR_API_KEY_HERE';
 
   // ============ STATE ============
   let activeTheme = null;
@@ -692,16 +648,13 @@
     const hint     = document.getElementById('statusHint');
     const hintText = document.getElementById('hintText');
     const btnLabel = document.getElementById('btnLabel');
-    const ready    = !!(apiKey && imageData && activeTheme && !isGenerating);
+    const ready    = !!(imageData && activeTheme && !isGenerating);
     btn.disabled = !ready;
     hint.classList.toggle('ready', ready);
 
     if (isGenerating) {
       btnLabel.textContent = 'thinking…';
       hintText.textContent = 'reading the image and finding names';
-    } else if (!apiKey) {
-      btnLabel.textContent = 'conjure five names';
-      hintText.textContent = 'enter your Anthropic API key first';
     } else if (!imageData && !activeTheme) {
       btnLabel.textContent = 'conjure five names';
       hintText.textContent = 'add an image and pick a category';
@@ -721,7 +674,7 @@
   document.getElementById('generateBtn').addEventListener('click', generate);
 
   async function generate() {
-    if (!apiKey || !imageData || !activeTheme || isGenerating) return;
+    if (!imageData || !activeTheme || isGenerating) return;
     isGenerating = true;
     updateGenerateButton();
 
@@ -767,7 +720,7 @@ Respond ONLY with a JSON object in this exact format, no markdown fences, no ext
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "x-api-key": apiKey,
+          "x-api-key": API_KEY,
           "anthropic-version": "2023-06-01",
         },
         body: JSON.stringify({
